@@ -1,0 +1,6 @@
+- création de la structure expo
+- nav bar (expo router)
+- splash screen
+- création d'un .env
+- création de la constant Styles (stylesheet)
+- configuration de la safeareaview pour ios/android sur <ExploreHeader/>
