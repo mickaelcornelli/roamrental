@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import * as SecureStore from "expo-secure-store"
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
+import Toast from 'react-native-toast-message';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // Cache the Clerk JWT
@@ -60,9 +61,11 @@ export default function RootLayout() {
     return null;
   }
 
-   return (
+  return (
+
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
       <RootLayoutNav />
+      <Toast />
     </ClerkProvider>
   );
 }
@@ -106,6 +109,7 @@ function RootLayoutNav() {
         name="listing/[id]"
         options={{
           headerTitle: "",
+          headerTransparent: true,
         }}
       />
 

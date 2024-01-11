@@ -2,13 +2,19 @@ import React from 'react'
 import { Tabs } from 'expo-router'
 import Colors from '@/constants/Colors'
 import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
+import { Platform } from 'react-native'
 
 const Layout = () => {
     return (
         <Tabs screenOptions={{
             tabBarActiveTintColor: Colors.primary,
             tabBarLabelStyle: {
-                fontFamily: 'mon-sb'
+                fontFamily: 'mon-sb',
+                ...Platform.select({
+                    android: {
+                        paddingBottom: 7
+                    },
+                }),
             }
         }}>
             <Tabs.Screen
