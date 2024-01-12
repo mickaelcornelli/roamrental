@@ -1,14 +1,4 @@
-- changement du logo
-- Flatlist des types de location
-- Design de la barre de recherche
-- Design bouton filtres
-- FlashList useMemo
-- data geo.json & json avec trie des photos medium_url null & item.review_scores_rating null
-- modification de babel.config pour react native reanimated
-- Toast notifications
-- Parralax effet sur le détails de l'annonce
-- Partage/Like détails de l'annonce
-- Affichage de la carte / des marker / redirection details des marker
-- Amélioration de la disposition des icones/label sur la barre de navigation pour android
-- Regroupage des markers + affichage des prix
-- ListingsBottomSheet modal
+- Profil
+- ListingsBottomSheet scroll fix android + bouton carte + affichage des résultats
+- ModalHeaderText
+- Booking

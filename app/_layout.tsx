@@ -6,6 +6,8 @@ import { Ionicons } from "@expo/vector-icons"
 import * as SecureStore from "expo-secure-store"
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import Toast from 'react-native-toast-message';
+import ModalHeaderText from '@/components/ModalHeaderText';
+import Colors from '@/constants/Colors';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // Cache the Clerk JWT
@@ -109,7 +111,7 @@ function RootLayoutNav() {
         name="listing/[id]"
         options={{
           headerTitle: "",
-          headerTransparent: true,
+          headerTransparent: true,/*remove it*/
         }}
       />
 
@@ -118,11 +120,21 @@ function RootLayoutNav() {
         options={{
           presentation: 'transparentModal',
           animation: 'fade',
+          headerTransparent: true,
+          headerTitle: () => <ModalHeaderText />,
           headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Ionicons name="close-outline" size={25} />
+            <TouchableOpacity
+              onPress={() => router.back()}
+              style={{
+                backgroundColor: '#fff',
+                borderColor: Colors.grey,
+                borderRadius: 20,
+                borderWidth: 1,
+                padding: 4,
+              }}>
+              <Ionicons name="close-outline" size={22} />
             </TouchableOpacity>
-          )
+          ),
         }}
       />
     </Stack>

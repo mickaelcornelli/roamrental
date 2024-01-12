@@ -1,15 +1,16 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { defaultStyles } from '@/constants/Styles';
 import { Link } from 'expo-router';
 import { Image } from 'react-native';
-import { FlashList } from "@shopify/flash-list";
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated"
+import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
 
 interface Props {
   listings: any[],
   category: string;
+  refresh: number;
 }
 
 type RenderItemParams<T> = {
@@ -17,9 +18,9 @@ type RenderItemParams<T> = {
   index: number;
 };
 
-const Listings = ({ listings: items, category }: Props) => {
+const Listings = ({ listings: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState(false);
-  const listRef = useRef<FlashList<any>>(null);
+  const listRef = useRef<BottomSheetFlatListMethods>(null);
 
   const renderRow = ({ item, index }: RenderItemParams<any>) => (
     <Link href={`/listing/${item.id}`} asChild>
@@ -54,6 +55,15 @@ const Listings = ({ listings: items, category }: Props) => {
   );
 
   useEffect(() => {
+    // Scroll down BottomSheet
+    if (refresh) {
+      listRef.current?.scrollToOffset({
+        offset: 0, animated: true
+      })
+    }
+  }, [refresh])
+
+  useEffect(() => {
     setLoading(true);
 
     setTimeout(() => {
@@ -63,12 +73,12 @@ const Listings = ({ listings: items, category }: Props) => {
 
   return (
     <View style={defaultStyles.container}>
-      <FlashList
+      <BottomSheetFlatList
+        ListHeaderComponent={<Text style={styles.info}>{items.length} résultats</Text>}
         showsVerticalScrollIndicator={false}
         ref={listRef}
         data={loading ? [] : items}
         renderItem={renderRow}
-        estimatedItemSize={300}
       />
     </View>
   )
@@ -101,6 +111,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "mon-sb",
     flex: 1 // avoid overlap
+  },
+  info: {
+    textAlign: "center",
+    fontFamily: "mon-sb",
+    fontSize: 16,
   }
 })
 

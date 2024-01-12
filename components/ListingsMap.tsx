@@ -20,7 +20,7 @@ const INITIAL_REGION = {
     longitudeDelta: 0.09
 }
 
-const ListingsMap = ({ listings }: Props) => {
+const ListingsMap = memo(({ listings }: Props) => {
 
     const router = useRouter()
 
@@ -78,7 +78,7 @@ const ListingsMap = ({ listings }: Props) => {
             </MapView>
         </View>
     )
-}
+})
 
 const styles = StyleSheet.create({
     marker: {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         fontFamily: "mon-sb",
     },
     clusterMarker: {
-        borderWidth:0.5,
+        borderWidth: 0.5,
         borderRadius: 50,
         backgroundColor: Colors.primary,
         width: 25,
