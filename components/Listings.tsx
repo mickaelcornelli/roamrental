@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { defaultStyles } from '@/constants/Styles';
 import { Link } from 'expo-router';
@@ -6,6 +6,9 @@ import { Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated"
 import { BottomSheetFlatList, BottomSheetFlatListMethods } from '@gorhom/bottom-sheet';
+import { collection, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import db from '../firebase';
+import Toast from 'react-native-toast-message';
 
 interface Props {
   listings: any[],
@@ -22,7 +25,59 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
   const [loading, setLoading] = useState(false);
   const listRef = useRef<BottomSheetFlatListMethods>(null);
 
-  const renderRow = ({ item, index }: RenderItemParams<any>) => (
+  const addToFavorites = async (item: any) => {
+    try {
+      const favoritesCollection = collection(db, 'favorites');
+      const favoriteDoc = doc(favoritesCollection, item.id)
+
+      // Add to firestore
+      await setDoc(favoriteDoc, item);
+
+      Toast.show({
+        type: 'success',
+        text1: item.name,
+        text2: `a bien été ajouté à vos favoris`
+      });
+      return true;
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: "Erreur",
+        text2: `L'opération pour ajouter la location à vos favoris a échoué`
+      });
+      return false;
+    }
+  }
+
+  const removeFromFavorites = async (item: any) => {
+    try {
+      const favoritesCollection = collection(db, 'favorites'); // Nom de la collection Firebase
+      const favoritesDoc = doc(favoritesCollection, item.id);
+
+      // Remove item by selecting his id
+      await deleteDoc(favoritesDoc);
+
+      Toast.show({
+        type: 'success',
+        text1: item.name,
+        text2: `a bien été retiré de vos favoris`
+      });
+      return true;
+    } catch (error) {
+      console.error('Erreur lors du retrait de la location des favoris :', error);
+      Toast.show({
+        type: 'error',
+        text1: "Erreur",
+        text2: `L'opération pour retirer la location des favoris a échoué`
+      });
+    }
+  }
+
+  const IsLocationInFavorite = () => {
+    // function to check favorite location & custom heart color icon
+  }
+
+  const renderRow = ({ item }: RenderItemParams<any>) => (
     <Link href={`/listing/${item.id}`} asChild>
       <TouchableOpacity>
         <Animated.View
@@ -31,7 +86,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
           exiting={FadeOutLeft}
         >
           <Image source={{ uri: item.medium_url }} style={styles.img} />
-          <TouchableOpacity style={styles.like}>
+          <TouchableOpacity style={styles.like} onPress={() => addToFavorites(item)}>
             <Ionicons name="heart-outline" size={24} />
           </TouchableOpacity>
 
@@ -74,7 +129,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
   return (
     <View style={defaultStyles.container}>
       <BottomSheetFlatList
-        ListHeaderComponent={<Text style={styles.info}>{items.length} résultats</Text>}
+        ListHeaderComponent={<Text style={styles.info}>{items.length} résultats pour la catégorie {category}</Text>}
         showsVerticalScrollIndicator={false}
         ref={listRef}
         data={loading ? [] : items}
@@ -115,7 +170,7 @@ const styles = StyleSheet.create({
   info: {
     textAlign: "center",
     fontFamily: "mon-sb",
-    fontSize: 16,
+    fontSize: 14,
   }
 })
 

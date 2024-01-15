@@ -28,6 +28,7 @@ const Layout = () => {
             <Tabs.Screen
                 name="wishlists"
                 options={{
+                    headerShown: false,
                     tabBarLabel: 'Favoris',
                     tabBarIcon: ({ color, size }) => <Ionicons name="heart-outline" color={color} size={size} />
                 }}
@@ -36,6 +37,7 @@ const Layout = () => {
             <Tabs.Screen
                 name="trips"
                 options={{
+                    headerShown: false,
                     tabBarLabel: 'Voyages',
                     tabBarIcon: ({ color, size }) => <FontAwesome5 name="airbnb" color={color} size={size} />
                 }}
@@ -44,7 +46,8 @@ const Layout = () => {
             <Tabs.Screen
                 name="inbox"
                 options={{
-                    tabBarLabel: 'Boîte de réception',
+                    headerShown: false,
+                    tabBarLabel: 'Messagerie',
                     tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="message-outline" color={color} size={size} />
                 }}
             />

@@ -7,6 +7,8 @@ import Colors from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
 import { defaultStyles } from '@/constants/Styles'
 import Toast from 'react-native-toast-message';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import db from '../../firebase';
 
 const IMG_HEIGHT = 300
 const { width } = Dimensions.get('window')
@@ -37,6 +39,25 @@ const Page = () => {
         });
     }
 
+    const addToFavorites = async () => {
+        try {
+            const favoritesCollection = collection(db, 'favorites');
+            const favoriteDoc = doc(favoritesCollection, listing.id)
+
+            // Add to firestore
+            await setDoc(favoriteDoc, listing);
+            showToast()
+            return true;
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: "Erreur",
+                text2: `L'opération pour ajouter la location à vos favoris a échoué`
+            });
+            return false;
+        }
+    }
+
     useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: '',
@@ -50,7 +71,7 @@ const Page = () => {
                     <TouchableOpacity style={styles.roundButton} onPress={shareListing}>
                         <Ionicons name="share-outline" size={22} color={'#000'} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.roundButton} onPress={showToast}>
+                    <TouchableOpacity style={styles.roundButton} onPress={addToFavorites}>
                         <Ionicons name="heart-outline" size={22} color={'#000'} />
                     </TouchableOpacity>
                 </View>

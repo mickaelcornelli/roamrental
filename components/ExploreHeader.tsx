@@ -57,6 +57,9 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
             scrollRef.current?.scrollTo({ x: x - 16, y: 0, animated: true });
         });
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        /*  Haptics.notificationAsync(
+             Haptics.NotificationFeedbackType.Success
+         ) */
         onCategoryChanged(categories[index].name);
     };
 
@@ -79,9 +82,11 @@ const ExploreHeader = ({ onCategoryChanged }: Props) => {
                         </TouchableOpacity>
                     </Link>
 
-                    <TouchableOpacity style={styles.filterBtn} onPress={() => { }}>
-                        <Ionicons name="options-outline" size={24} />
-                    </TouchableOpacity>
+                    <Link href={'/(modals)/filter'} asChild>
+                        <TouchableOpacity style={styles.filterBtn}>
+                            <Ionicons name="options-outline" size={24} />
+                        </TouchableOpacity>
+                    </Link>
                 </View>
 
                 <ScrollView

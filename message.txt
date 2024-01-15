@@ -1,4 +1,9 @@
-- Profil
-- ListingsBottomSheet scroll fix android + bouton carte + affichage des résultats
-- ModalHeaderText
-- Booking
+- installation de redux slice
+- installation de firebase & config
+- favoris (firebase)
+- messagerie (fake conversation)
+- voyages (random filtre parmi les json existant)
+- effet chargement favoris
+- ajout de filtre sur les catégories
+- creation du modal filter (literie compteur +/-, equipements checkbox, barre de slide pour les prix )
+- génération des fichiers iOS et Android avec --run dev client

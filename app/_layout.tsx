@@ -8,6 +8,9 @@ import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import Toast from 'react-native-toast-message';
 import ModalHeaderText from '@/components/ModalHeaderText';
 import Colors from '@/constants/Colors';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import favoritesReducer from 'slice/favoritesSlice';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 // Cache the Clerk JWT
@@ -27,6 +30,15 @@ const tokenCache = {
     }
   },
 };
+
+// Redux
+const store = configureStore({
+  reducer: {
+    favorites: favoritesReducer,
+
+  },
+});
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -65,10 +77,12 @@ export default function RootLayout() {
 
   return (
 
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
-      <RootLayoutNav />
-      <Toast />
-    </ClerkProvider>
+    <Provider store={store}>
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
+        <RootLayoutNav />
+        <Toast />
+      </ClerkProvider>
+    </Provider>
   );
 }
 
@@ -135,6 +149,16 @@ function RootLayoutNav() {
               <Ionicons name="close-outline" size={22} />
             </TouchableOpacity>
           ),
+        }}
+      />
+
+      <Stack.Screen
+        name="(modals)/filter"
+        options={{
+          presentation: 'transparentModal',
+          animation: 'fade',
+          headerTransparent: true,   
+          headerShown:false,
         }}
       />
     </Stack>

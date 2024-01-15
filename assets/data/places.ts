@@ -1,6 +1,6 @@
 export const places = [
     {
-      title: "Je suis flexible",
+      title: "Partout",
       img: require('@/assets/data/world-0.png'),
     },
     {
