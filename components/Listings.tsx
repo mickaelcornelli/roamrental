@@ -129,7 +129,7 @@ const Listings = ({ listings: items, category, refresh }: Props) => {
   return (
     <View style={defaultStyles.container}>
       <BottomSheetFlatList
-        ListHeaderComponent={<Text style={styles.info}>{items.length} résultats pour la catégorie {category}</Text>}
+        ListHeaderComponent={<Text style={styles.info}>{items.length} résultats pour la catégorie '{category}'</Text>}
         showsVerticalScrollIndicator={false}
         ref={listRef}
         data={loading ? [] : items}

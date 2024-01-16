@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Platform, SafeAreaView, FlatList, Image } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, Platform, SafeAreaView, FlatList, Image } from 'react-native'
 import listingsData from '@/assets/data/airbnb-listings.json'
 import { defaultStyles } from '@/constants/Styles';
 import Constants from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ListingLocation } from '@/interfaces/listingLocation';
 
-
+const screen = Dimensions.get('window').width;
 const statusBarHeight = Constants.statusBarHeight
 
 const Page = () => {
@@ -72,7 +72,7 @@ const Page = () => {
       }
     >
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>Vos locations</Text>
+        <Text style={styles.header}>Vos précédantes locations</Text>
         <MaterialIcons title="travel-explore" size={26} />
       </View>
 
@@ -117,8 +117,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
+    alignSelf: "center",
+    textAlign: "center",
     fontFamily: 'mon-b',
-    fontSize: 24,
+    fontSize: 22,
   },
   bookingItem: {
     backgroundColor: '#FFF',

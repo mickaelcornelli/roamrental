@@ -16,7 +16,6 @@
     "@clerk/clerk-expo": "^0.19.7",
     "@expo/vector-icons": "^13.0.0",
     "@gorhom/bottom-sheet": "^4.5.1",
-    "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/slider": "^4.5.0",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^2.0.1",
@@ -47,7 +46,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-web": "~0.19.6",
-    "react-redux": "^9.1.0"
+    "react-redux": "^9.1.0",
+    "expo-checkbox": "~2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

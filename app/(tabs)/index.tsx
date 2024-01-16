@@ -7,7 +7,6 @@ import listingsDataGeo from '@/assets/data/airbnb-listings.geo.json'
 import ListingsMap from '@/components/ListingsMap'
 import ListingsBottomSheet from '@/components/ListingsBottomSheet'
 
-console.log(JSON.stringify(listingsData[10], null, 2))
 const Page = () => {
   const [category, setCategory] = useState('Petites maisons')
   const items = useMemo(() => {

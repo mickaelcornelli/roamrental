@@ -32,7 +32,7 @@ const Page = () => {
   }, []);
 
   const fetchFavoritesFromFirebase = async () => {
-    const favoritesCollection = collection(db, 'favorites'); 
+    const favoritesCollection = collection(db, 'favorites');
 
     try {
       const querySnapshot = await getDocs(query(favoritesCollection));
@@ -70,32 +70,35 @@ const Page = () => {
           data={favorites}
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }: RenderItemParams<any>) => (
-            <Link href={`/listing/${item.id}`} asChild>
-              <TouchableOpacity>
-                <Animated.View
-                  style={styles.listing}
-                  entering={FadeInRight}
-                  exiting={FadeOutLeft}
-                >
-                  <Image source={{ uri: item.medium_url }} style={styles.img} />
+            <>
+              <Link href={`/listing/${item.id}`} asChild>
+                <TouchableOpacity>
+                  <Animated.View
+                    style={styles.listing}
+                    entering={FadeInRight}
+                    exiting={FadeOutLeft}
+                  >
+                    <Image source={{ uri: item.medium_url }} style={styles.img} />
 
-                  <View style={styles.content}>
-                    <Text style={styles.name}>{item.name}</Text>
-                    <View style={[styles.row, { gap: 4 }]}>
-                      <Ionicons name="star" size={16} />
-                      <Text style={{ fontFamily: "mon-sb" }}>{item.review_scores_rating}/100</Text>
+                    <View style={styles.content}>
+                      <Text style={styles.name}>{item.name}</Text>
+                      <View style={[styles.row, { gap: 4 }]}>
+                        <Ionicons name="star" size={16} />
+                        <Text style={{ fontFamily: "mon-sb" }}>{item.review_scores_rating}/100</Text>
+                      </View>
                     </View>
-                  </View>
 
-                  <Text style={{ fontFamily: "mon-sb" }}>{item.room_type}</Text>
+                    <Text style={{ fontFamily: "mon-sb" }}>{item.room_type}</Text>
 
-                  <View style={styles.row}>
-                    <Text style={{ fontFamily: "mon-sb" }}>{item.price}€</Text>
-                    <Text style={{ fontFamily: "mon" }}>/nuit</Text>
-                  </View>
-                </Animated.View>
-              </TouchableOpacity>
-            </Link>
+                    <View style={styles.row}>
+                      <Text style={{ fontFamily: "mon-sb" }}>{item.price}€</Text>
+                      <Text style={{ fontFamily: "mon" }}>/nuit</Text>
+                    </View>
+                  </Animated.View>
+                </TouchableOpacity>
+              </Link>
+              <View style={styles.seperatorLine} />
+            </>
           )}
         />
       }
@@ -160,6 +163,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "mon-sb",
     flex: 1 // avoid overlap
+  },
+  seperatorLine: {
+    flex: 1,
+    borderBottomColor: "#c8c8c8",
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
 })
 
